@@ -1,0 +1,37 @@
+import math
+
+
+def get_value(x, y):
+    return 6 * pow(x, 6) + 2 * pow(x, 4) * pow(y, 2) + 10 * pow(x, 2) + 6 * x * y + 10 * pow(y, 2) - 6 * x + 4
+
+
+def derivative_x(x, y):
+    return 36 * pow(x, 5) + 8 * pow(x, 3) * pow(y, 2) + 20 * x + 6 * y - 6
+
+
+def derivative_y(x, y):
+    return 4 * y * pow(x, 4) + 6 * x + 20 * y
+
+
+learning_rate = 0.01
+epsilon = 0.01
+x = 0
+y = 0
+minimum = 1000
+best_e = 0
+best_a = 0
+for i in range(0, 900):
+    x = 0
+    y = 0
+    epsilon = epsilon - 0.00001
+    learning_rate = learning_rate - 0.00001
+    while ( abs(derivative_y(x,y)) > epsilon or abs(derivative_x(x,y)) > epsilon ) and epsilon != 0:
+        if abs(derivative_y(x,y)) > epsilon:
+            y = y - learning_rate * derivative_y(x,y)
+        if abs(derivative_x(x,y)) > epsilon:
+            x = x - learning_rate * derivative_x(x,y)
+    if get_value(x,y) < minimum:
+        minimum = get_value(x,y)
+        best_a = learning_rate
+        best_e = epsilon
+print(get_value(x,y))
