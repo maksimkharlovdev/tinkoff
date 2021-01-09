@@ -1,0 +1,28 @@
+import pandas as pd
+
+static_weights = [[0.0, 0.5, 0.5], [0.2, 0.0, 0.8], [0.3, 0.0, 0.7]]
+d_weights = [[0.0, 0.5, 0.5], [0.2, 0.0, 0.8], [0.3, 0.0, 0.7]]
+buf = [[0.0, 0.0, 0.0], [0.0, 0.0, 0.0], [0.0, 0.0, 0.0]]
+
+n = int(input())
+
+
+def get_buf(j, k):
+    res = 0
+    res += static_weights[j][0] * d_weights[0][k]
+    res += static_weights[j][1] * d_weights[1][k]
+    res += static_weights[j][2] * d_weights[2][k]
+    return res
+
+
+for i in range(n):
+    for j in range(3):
+        for k in range(3):
+            buf[j][k] = get_buf(j, k)
+    d_weights = buf
+
+a = pd.DataFrame(d_weights,
+                 columns={'home_alone': 0, 'trees': 1, 'the_irony_of_fate': 2},
+                 index={'home_alone': 0, 'trees': 1, 'the_irony_of_fate': 2})
+
+print(a)
